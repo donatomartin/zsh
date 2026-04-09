@@ -47,8 +47,8 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
-# Only initialize NVM if the 'nvm' command is available
-if command -v nvm >/dev/null 2>&1; then
+# Only initialize NVM if the .nvm dir exists
+if [ -s "$HOME/.nvm" ]; then
     export NVM_DIR="$HOME/.nvm"
     # Only source nvm.sh if it exists
     if [ -s "/usr/share/nvm/nvm.sh" ]; then
