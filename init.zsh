@@ -47,7 +47,13 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 
-export NVM_DIR=~/.nvm
-source /usr/share/nvm/nvm.sh
+# Only initialize NVM if the 'nvm' command is available
+if command -v nvm >/dev/null 2>&1; then
+    export NVM_DIR="$HOME/.nvm"
+    # Only source nvm.sh if it exists
+    if [ -s "/usr/share/nvm/nvm.sh" ]; then
+        source /usr/share/nvm/nvm.sh
+    fi
+fi
 
 source ~/.config/zsh/aliases.zsh
