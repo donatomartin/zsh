@@ -10,12 +10,7 @@ alias vim="nvim";
 
 ###tmux
 alias t="tmux"
-
-###wsl
-alias winget="winget.exe"
-alias pnpm="pnpm.exe"
-alias clip="clip.exe"
-alias docker="docker.exe"
+alias ta="tmux a"
 
 ###git
 alias ga="git add"
