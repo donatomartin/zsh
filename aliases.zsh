@@ -15,12 +15,14 @@ alias ta="tmux a"
 ###git
 alias ga="git add"
 alias gA="git add -A"
-alias gs="git status" alias gcm="git commit -m"
+alias gs="git status"
+alias gcm="git commit -m"
 alias gc="git commit"
 alias gd="git diff"
 alias gds="git diff --staged"
 alias gdh="git diff HEAD"
-alias gl="git log --oneline --graph --decorate --all --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%C(auto)%h%d %s %C(brightblack)(%an, %ad) [%cd]'"
+alias gl="git log --oneline --graph --decorate"
+alias gla="git log --oneline --graph --decorate --all --date=format:'%Y-%m-%d %H:%M' --pretty=format:'%C(auto)%h%d %s %C(brightblack)(%an, %ad) [%cd]'"
 alias gpsh="git push"
 
 ###list

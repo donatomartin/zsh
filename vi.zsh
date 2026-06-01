@@ -23,7 +23,6 @@ bindkey -M vicmd 'yy' vi_yank_and_clip
 zstyle :compinstall filename '/home/donato/.zshrc'
 zstyle ':completion:*' menu select
 
-
 autoload -Uz compinit
 compinit
 
@@ -45,3 +44,23 @@ vi_paste_from_clip() {
 zle -N vi_paste_from_clip
 bindkey -M vicmd 'p' vi_paste_from_clip
 
+# Re-entrancy guard for zle-keymap-select to stop recursion loops
+typeset -gi _ZKMS_GUARD=0
+
+my_keymap_select_guard() {
+  if (( _ZKMS_GUARD > 0 )); then
+    return 0
+  fi
+  (( _ZKMS_GUARD++ ))
+
+  # Your optional logic (e.g., cursor shape by mode) goes here.
+  # DO NOT call `zle zle-keymap-select` from here; call the original if saved.
+  if (( $+functions[zle_keymap_select_original] )); then
+    zle zle_keymap_select_original
+  fi
+
+  (( _ZKMS_GUARD-- ))
+}
+
+# Install guarded wrapper (last writer wins)
+zle -N zle-keymap-select my_keymap_select_guard
