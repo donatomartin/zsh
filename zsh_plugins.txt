@@ -1,3 +1,4 @@
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
 Aloxaf/fzf-tab
+jimhester/per-directory-history

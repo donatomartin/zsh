@@ -1,10 +1,12 @@
 HISTFILE=~/.histfile
-HISTSIZE=100
-SAVEHIST=100
+HISTSIZE=1000
+SAVEHIST=1000
 EDITOR=nvim
 
 setopt autocd
 setopt NO_BEEP
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
 
 source ~/.config/zsh/antidote.zsh
 source ~/.config/zsh/vi.zsh
