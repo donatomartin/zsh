@@ -8,3 +8,4 @@ fi
 
 source "$ANTIDOTE_HOME/antidote.zsh"
 antidote load ~/.config/zsh/zsh_plugins.txt
+antidote load ~/.config/zsh/zsh_plugins.local.txt

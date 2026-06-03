@@ -1,2 +1,2 @@
-*.local.zsh
+*.local.*
 zsh_plugins.zsh
