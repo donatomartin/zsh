@@ -6,13 +6,13 @@ EDITOR=nvim
 setopt autocd
 setopt NO_BEEP
 
+source ~/.config/zsh/antidote.zsh
 source ~/.config/zsh/vi.zsh
 source ~/.config/zsh/fzf.zsh
+source ~/.config/zsh/aliases.zsh
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
-
-source ~/.config/zsh/aliases.zsh
 
 # Machine specific gitignored aliases
 if [ -s "$HOME/.config/zsh/aliases.local.zsh" ]; then

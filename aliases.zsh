@@ -1,5 +1,3 @@
-## Aliases
-
 ###system
 alias c="clear"
 

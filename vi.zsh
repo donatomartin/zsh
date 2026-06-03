@@ -20,6 +20,11 @@ bindkey -M vicmd 'y'  vi_yank_and_clip
 bindkey -M vicmd 'Y'  vi_yank_and_clip
 bindkey -M vicmd 'yy' vi_yank_and_clip
 
+# v to edit command in editor
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
 zstyle :compinstall filename '/home/donato/.zshrc'
 zstyle ':completion:*' menu select
 
@@ -28,21 +33,39 @@ compinit
 
 # --- vi paste
 vi_paste_from_clip() {
-  # Get clipboard, remove Windows carriage returns, and strip trailing newlines
-  local content
-  content=$(powershell.exe -NoProfile -Command "Get-Clipboard" 2>/dev/null | tr -d '\r')
-  
+  local content=""
+
+  if grep -qi microsoft /proc/version 2>/dev/null; then
+    # WSL
+    content=$(powershell.exe -NoProfile -Command "Get-Clipboard" 2>/dev/null | tr -d '\r')
+
+  elif command -v wl-paste >/dev/null 2>&1; then
+    # Linux Wayland
+    content=$(wl-paste --no-newline 2>/dev/null)
+
+  elif command -v xclip >/dev/null 2>&1; then
+    # Linux X11
+    content=$(xclip -selection clipboard -o 2>/dev/null)
+
+  elif command -v xsel >/dev/null 2>&1; then
+    # Linux X11 alternative
+    content=$(xsel --clipboard --output 2>/dev/null)
+  fi
+
   if [[ -n "$content" ]]; then
-    # Set the Zsh internal buffer
     KILLRECT=""
     CUTBUFFER="$content"
-    # standard vi-put-after (lowercase p)
     zle vi-put-after
   fi
 }
 # Register and bind
 zle -N vi_paste_from_clip
 bindkey -M vicmd 'p' vi_paste_from_clip
+
+# Save original if exists and not already saved
+if (( ! $+functions[zle_keymap_select_original] )) && (( $+functions[zle-keymap-select] )); then
+  functions[zle_keymap_select_original]=$functions[zle-keymap-select]
+fi
 
 # Re-entrancy guard for zle-keymap-select to stop recursion loops
 typeset -gi _ZKMS_GUARD=0
@@ -53,8 +76,6 @@ my_keymap_select_guard() {
   fi
   (( _ZKMS_GUARD++ ))
 
-  # Your optional logic (e.g., cursor shape by mode) goes here.
-  # DO NOT call `zle zle-keymap-select` from here; call the original if saved.
   if (( $+functions[zle_keymap_select_original] )); then
     zle zle_keymap_select_original
   fi
