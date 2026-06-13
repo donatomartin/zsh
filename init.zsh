@@ -1,3 +1,6 @@
+# Start profiling
+# zmodload zsh/zprof
+
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -25,3 +28,6 @@ fi
 if [ -s "$HOME/.config/zsh/config.local.zsh" ]; then
   source ~/.config/zsh/config.local.zsh
 fi
+
+# Stop profiling
+# zprof

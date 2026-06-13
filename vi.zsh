@@ -29,7 +29,13 @@ zstyle :compinstall filename '/home/donato/.zshrc'
 zstyle ':completion:*' menu select
 
 autoload -Uz compinit
-compinit
+zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+
+if [[ ! -f "$zcompdump" || "$zcompdump" -ot ~/.zshrc ]]; then
+  compinit -d "$zcompdump"
+else
+  compinit -C -d "$zcompdump"
+fi
 
 # --- vi paste
 vi_paste_from_clip() {
