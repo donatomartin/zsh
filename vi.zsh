@@ -23,7 +23,7 @@ bindkey -M vicmd 'yy' vi_yank_and_clip
 # v to edit command in editor
 autoload edit-command-line
 zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
+bindkey -M vicmd V edit-command-line
 
 zstyle :compinstall filename '/home/donato/.zshrc'
 zstyle ':completion:*' menu select
